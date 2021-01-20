@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<h3>Add Ship</h3>
+<p>
+    <a th:href="@{/ship/...}">
+        Back to ship list
+    </a>
+</p>
+<h2 th:text="${success}"></h2>
+<div id="form">
+    <form action="#" th:action="@{/ship/create}" th:object="${cargos}"
+          method="POST" novalidate="novalidate">
+        <input type="hidden" th:field="*{id}"/>
+        <div>
+            <label>Name</label>
+            <input type="text" oninput="checkValidate(0,this)" th:field="*{name}"/>
+            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+        </div>
+        <div>
+            <label>Address</label>
+            <input type="text" oninput="checkValidate(0,this)" th:field="*{address}"/>
+            <span class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</span>
+        </div>
+        <div>
+            <label>Price</label>
+            <input type="number" th:field="*{price}"/>
+            <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</span>
+        </div>
+        <div>
+            <label>Description</label>
+            <input type="text" oninput="checkValidate(0,this)" th:field="*{description}"/>
+            <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
+        </div>
+        <div>
+            <label>Date</label>
+            <input type="text" oninput="checkValidate(0,this)" th:field="*{date}"/>
+            <span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">date Error</span>
+        </div>
+        <div>
+            <label>Transitcar</label>
+            <select name="transitcarId">
+                <th:block th:each="item : ${listTrasitcar}">
+                    <option th:value="${item.id}" th:text="${item.name}"></option>
+                </th:block>
+            </select>
+        </div>
+
+
+        <input type="submit" value="Save"></input>
+    </form>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+<script>
+    function checkValidate(index, inp){
+        const error = document.getElementsByClassName("error");
+        if(inp.value.length>0){
+            error[index].style.display = 'none';
+        }else {
+            error[index].style.display = 'block';
+        }
+
+    }
+</script>
+</body>
+</html>
